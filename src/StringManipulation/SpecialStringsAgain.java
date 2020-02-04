@@ -13,15 +13,25 @@ public class SpecialStringsAgain {
     // Complete the substrCount function below.
     static long substrCount(int n, String s) {
     	long[][] count = new long[n][n];
-    	for (int i = 0; i < n; i++)
+    	boolean[][] isPalin = new boolean[n][n];
+    	for (int i = 0; i < n; i++) {
     		count[i][i] = 1;
+    		isPalin[i][i] = true;
+    	}
+    	for (int j = 0; j < n; j++) {
+    		for (int i = 0; i < j; i++) {
+    			System.out.println("isPlain[" + i + "+1][" + j + "-1]: " + isPalin[i+1][j-1] + " | " + s.charAt(i) + " " + s.charAt(j));
+    			if (isPalin[i+1][j-1] && s.charAt(i) == s.charAt(j))
+    				isPalin[i][j] = true;
+    		}
+    	}
+    	System.out.println(Arrays.deepToString(isPalin));
+    	return 0;
     }
 
     private static final Scanner scanner = new Scanner(System.in);
 
     public static void main(String[] args) throws IOException {
-        BufferedWriter bufferedWriter = new BufferedWriter(new FileWriter(System.getenv("OUTPUT_PATH")));
-
         int n = scanner.nextInt();
         scanner.skip("(\r\n|[\n\r\u2028\u2029\u0085])?");
 
@@ -29,10 +39,7 @@ public class SpecialStringsAgain {
 
         long result = substrCount(n, s);
 
-        bufferedWriter.write(String.valueOf(result));
-        bufferedWriter.newLine();
-
-        bufferedWriter.close();
+        //System.out.println(String.valueOf(result));
 
         scanner.close();
     }
